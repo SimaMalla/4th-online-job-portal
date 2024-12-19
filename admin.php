@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,19 +12,21 @@
     
     ?>
 </head>
+
 <body>
 
-<?php   
+    <?php   
     include('header.php'); 
     if(!isset( $_SESSION['userid'] ) ){
         header('Location: login.php');
       } 
     ?>
-    
-<h1>Dashboard Employer</h1>
-  
-<br><br>
- <?php include('footer.php'); ?>
+
+    <h1>Dashboard Employer</h1>
+
+    <br><br>
+    <?php include('footer.php'); ?>
 
 </body>
+
 </html>

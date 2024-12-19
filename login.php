@@ -1,102 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Jobs Portal</title>
-    <?php 
-    
-    include('header_link.php'); 
+    <link rel="stylesheet" href="./css/login.css">
+
+    <?php
+
+    include('header_link.php');
     include('dbconnect.php');
 
-    
-    
+
+
     ?>
+
+
+
 </head>
+
 <body>
-<?php 
-    
-    include('header.php'); 
+    <?php
+
+    include('header.php');
 
     ?>
+    <div class="section-login">
 
-    <div class="container">
+        <div class="container view-h-job">
 
-    
-      <div class="single">
-      <h1>Employer / User Login</h1>
 
-            <div class="col-md-6">
+            <div class="single">
 
-                 <form action="login.php" method="post">
-                    <div class="form-group">
-                    <input type="text" placeholder="enter a email" name="email" class="form-control">
+                <div class="main">
+                    <div class="box effect7">
+                        <div class="header-text">Employer / User Login</div>
+                        <form action="login.php" method="post">
+                            <div class="form-group">
+                                <input type="text" placeholder="enter a email" name="email" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="enter a password" name="password" class="form-control">
+                            </div>
+                            <input type="submit" name="login" value="Login" class="btn btn-primary">
+
+                            <span class="signup">Don't have an account?&nbsp;<a href="#" class="link">Sign up</a></span>
+                        </form>
                     </div>
-                    <div class="form-group">
-                    <input type="text" placeholder="enter a password" name="password" class="form-control">
-                    </div>
-                    <input type="submit"  name="login" value="Login" class="btn btn-primary">
+                </div>
 
-                 </form>
-              
 
             </div>
 
-      </div>
- 
 
-       <?php 
+            <?php
 
-           if(isset($_POST['login']))
-           {
+            if (isset($_POST['login'])) {
 
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+                $email = $_POST['email'];
+                $password = $_POST['password'];
 
-            $sql = "select userid,name,email,password,type from user where email = '$email' and password = '$password' 
-            UNION ALL
-            select empid, name, email , password,type from employer where email = '$email' and password = '$password'
-            ";
+                $sql = "select * from user where email = '$email' and password = '$password' ";
 
-            //$sql = "select * from employer where email = '$email' and password = '$password'";
+                $rs = mysqli_query($con, $sql);
 
-            $rs = mysqli_query($con,$sql);
-             
-            if($row = mysqli_num_rows($rs)>0){
-                $userinfo = mysqli_fetch_array($rs);
+                if ($row = mysqli_num_rows($rs) > 0) {
+                    $userinfo = mysqli_fetch_array($rs);
+                    $user_id = $userinfo['userid'];
+                    $email = $userinfo['email'];
+                    $password = $userinfo['password'];
+                    $type = $userinfo['roletype'];
 
-                
-                session_start();
+                    $_SESSION['userid'] = $user_id;
+                    $_SESSION['email'] = $email;
+                    $_SESSION['password'] = $password;
+                    $_SESSION['roletype'] = $type;
 
-                $user_id     = $userinfo[0];
-                $email       = $userinfo[2];
-                $password    = $userinfo[3];
-                $type        = $userinfo[4];
+                    if ($userinfo['roletype'] == 1) {
+                        header('Location: admin.php');
+                    } elseif ($userinfo['roletype'] == 2) {
+                        header('Location: index.php');
+                    }
 
-                $_SESSION['userid'] = $user_id;
-                $_SESSION['email'] = $email;
-                $_SESSION['password'] = $password;
-                $_SESSION['type'] = $type;
- 
-            
-                 if($type == 1){
-                    header('Location: admin.php');
-                 }else if($type == 2){
-                    header('Location: index.php');
-                 }
+                } else {
+                    echo "<h3 style='color:red;'> Invalid Username or password</h3>";
+                }
 
-            }else{
-                  echo "<h1 style='color:red;'> Invalid Username or password</h1>";
+
             }
-               
-
-        }
-?>
+            ?>
 
 
-</div>
+        </div>
+    </div>
 
-<br><br>
- <?php include('footer.php'); ?>
+
+    <?php include('footer.php'); ?>
 </body>
+
 </html>

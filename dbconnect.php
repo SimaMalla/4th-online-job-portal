@@ -1,6 +1,6 @@
 <?php
 
-$con = mysqli_connect('localhost','root','','dbjobsportal');
+$con = mysqli_connect('localhost','root','','onlinejobportal');
 
 if(!$con){
     die('cannot connected');

@@ -1,112 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register | Jobs Portal</title>
-    <?php 
-    
-    include('header_link.php'); 
-    include('dbconnect.php');
+    <link rel="stylesheet" href="./css/login.css">
 
-    
-    
+    <?php
+    include('header_link.php');
+    include('dbconnect.php');
     ?>
 </head>
+
 <body>
-<?php 
-    
-    include('header.php'); 
+    <?php include('header.php'); ?>
 
-    ?>
-<div class="container">
+    <div class="section-register">
+        <div class="container view-h-job">
+            <div class="single">
+                <div class="main">
+                    <div class="box effect7">
+                        <div class="header-text">Employer/User Registration</div>
 
-
-      <div class="single">
-           
-            <div class="col-md-6">
-            <h1>Employer Register</h1>
-
-                 <form action="register.php" method="post">
-
-                     <div class="form-group">
-                     <input type="text" placeholder="enter a name" name="name" class="form-control"> 
-                     </div>
-                     <div class="form-group">
-                    <input type="text" placeholder="enter a email" name="email" class="form-control">
+                        <form action="register.php" method="post">
+                            <div class="form-group">
+                                <input type="text" placeholder="Enter your name" name="name" class="form-control"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Enter your email" name="email" class="form-control"
+                                    required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" placeholder="Enter your password" name="password"
+                                    class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="number" placeholder="Enter your role type" name="role" class="form-control"
+                                    required>
+                            </div>
+                            <input type="submit" name="register" value="Register" class="btn btn-primary">
+                        </form>
                     </div>
-                    <div class="form-group">
-                    <input type="text" placeholder="enter a password" name="password" class="form-control">
-                    </div>
-                    <input type="submit"  name="empregister" value="Register Employer" class="btn btn-primary">
-
-                 </form>
-              
-
+                </div>
             </div>
 
-            <div class="col-md-6">
-            <h1>User Register</h1>
-                 <form action="register.php" method="post">
+            <?php
+            if (isset($_POST['register'])) {
+                $name = mysqli_real_escape_string($con, $_POST['name']);
+                $email = mysqli_real_escape_string($con, $_POST['email']);
+                $password = mysqli_real_escape_string($con, $_POST['password']);
+                $role = mysqli_real_escape_string($con, $_POST['role']);
 
-                     <div class="form-group">
-                     <input type="text" placeholder="enter a name" name="name" class="form-control"> 
-                     </div>
-                     <div class="form-group">
-                    <input type="text" placeholder="enter a email" name="email" class="form-control ">
-                    </div>
-                    <div class="form-group">
-                    <input type="text" placeholder="enter a password" name="password" class="form-control">
-                    </div>
-                    
-                    <input type="submit"  name="userregister" value="Register User" class="btn btn-primary">
+                // Basic validation for role
+                if ($role != 1 && $role != 2) {
+                    echo "<h3 style='color:red;'>Invalid role type! Please select 1 for Admin or 2 for Employer.</h3>";
+                } else {
+                    // Encrypt the password before storing it
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                 </form>
-              
+                    // Insert user into the database
+                    $sql = "INSERT INTO `user` (`name`, `email`, `password`, `roletype`) VALUES ('$name', '$email', '$hashed_password', '$role')";
+                    if (mysqli_query($con, $sql)) {
+                        echo "<script>alert('Your account created Successfully')</script>";
+                    } else {
+                        echo "<script>alert('Registration Failed. Please try again later.')</script>";
+                    }
+                }
+            }
+            ?>
+        </div>
+    </div>
 
-            </div>
-      </div>
- 
-
-       <?php 
-
-           if(isset($_POST['empregister']))
-           {
-
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-
-           $sql = "INSERT INTO `employer`( `name`, `email`, `password`, `type`) VALUES ('$name','$email','$password','1')";
-           mysqli_query($con,$sql);
-           
-
-
-           echo "<script>alert('Employer Register')</script>";
-
-        }
-
-        if(isset($_POST['userregister']))
-        {
-
-         $name = $_POST['name'];
-         $email = $_POST['email'];
-         $password = $_POST['password'];
-
-  
-        $sql2 = "INSERT INTO `user`(`name`, `email`, `password`, `type`) VALUES ('$name','$email','$password','2')";
-        mysqli_query($con,$sql2);
-       
-
-        echo "<script>alert('User Register')</script>";
-
-     }
-
-?>
-
- </div>
- <br><br>
- <?php include('footer.php'); ?>
-
+    <?php include('footer.php'); ?>
 </body>
+
 </html>
