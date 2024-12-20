@@ -22,9 +22,9 @@
             <div class="footer-section">
                 <h4>Follow Us</h4>
                 <ul class="footer-list">
-                    <li><a href="#"> Facebook</a></li>
+                    <li><a href="https://www.facebook.com/profile.php?id=100049261285433"> Facebook</a></li>
                     <li><a href="#"></i> Twitter</a></li>
-                    <li><a href="#"></i> LinkedIn</a></li>
+                    <li><a href="https://www.linkedin.com/feed/" target="_blank"></i> LinkedIn</a></li>
                 </ul>
             </div>
         </div>

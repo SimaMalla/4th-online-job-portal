@@ -32,32 +32,7 @@
 
                 </div>
 
-                <!-- <?php
-                $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location 
-                FROM jobs
-                INNER JOIN categories ON categories.catid=jobs.catid
-                ORDER by jobs.jobid DESC";
-                $rs = mysqli_query($con, $sql);
-                while ($jobdata = mysqli_fetch_array($rs)) {
 
-                    ?>
-                    <div class="col-sm-12 myborder">
-                        <div class="icon-box-body">
-                            <h4><?= $jobdata['name'] ?> </h4>
-                            <small>Category:(<?= $jobdata['catname'] ?>)</small>
-                            <p>Desc:<?= $jobdata['desc'] ?></p>
-                            <p>Skill:<?= $jobdata['skill'] ?></p>
-                            <p>Timing:<?= $jobdata['timing'] ?></p>
-                            <p>Location:<?= $jobdata['location'] ?></p>
-    
-                            <div class="col-sm-2">
-                                <a href="apply.php?jobid=<?= $jobdata['jobid'] ?>" class="btn btn-primary">Apply Now</a>
-                            </div>
-    
-                        </div>
-    
-                    </div>
-                <?php } ?> -->
                 <main>
                     <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
                         <div class="card-wrapper">
@@ -85,8 +60,9 @@
                                                 <small><?= $jobdata['catname'] ?></small>
 
                                             </div>
-
                                         </div>
+                                        <a href="single.php?jobid=<?= $jobdata['jobid'] ?>" class="btn btn-primary">More
+                                            Details</a>
                                     </div>
                                 </div>
 

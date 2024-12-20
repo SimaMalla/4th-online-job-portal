@@ -37,8 +37,12 @@
                                     class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <input type="number" placeholder="Enter your role type" name="role" class="form-control"
-                                    required>
+                                <label for="dropdown">Your Role:</label>
+                                <select id="dropdown dropdown-text">
+                                    <option value="admin">admin</option>
+                                    <option value="employer">employer</option>
+                                    <option value="user">user</option>
+                                </select>
                             </div>
                             <input type="submit" name="register" value="Register" class="btn btn-primary">
                         </form>

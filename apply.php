@@ -8,6 +8,7 @@
   <?php
 
   include('header_link.php');
+  include('header.php');
   include('dbconnect.php');
 
 
@@ -18,19 +19,6 @@
 
 <body>
 
-  <?php
-
-  include('header.php');
-
-  if (!isset($_SESSION['userid'])) {
-    header('Location: login.php');
-  }
-
-  $jobid = $_GET['jobid'];
-  $userid = $_SESSION['userid'];
-
-  ?>
-
   <div class="container">
 
 
@@ -39,14 +27,14 @@
       <div class="col-md-6">
         <form action="apply.php" method="post" enctype="multipart/form-data">
 
-          <input type="hidden" value="<?= $jobid ?>" name="jobid">
-          <input type="hidden" value="<?= $userid ?>" name="userid">
+          <input type="hidden" value="<?= $jobdata['jobid'] ?>" name="jobid">
+          <input type="hidden" value="<?= $userdata['userid'] ?>" name="userid">
 
           <div class="form-group">
-            <input type="file" name="file" class="form-control">
+            <input type="file" name="file" placeholder="upload your cv" class="form-control">
           </div>
 
-          <input type="submit" name="applyjob" value="Post Job" class="btn btn-primary">
+          <input type="submit" name="applyjob" value="Apply" class="btn btn-primary">
 
         </form>
 
@@ -71,17 +59,18 @@
       $tmp = $_FILES['file']['tmp_name'];
 
 
-      move_uploaded_file($tmp, "cv/$file");
+      move_uploaded_file($tmp, "uplodes/$file");
 
       $sql = "INSERT INTO `application`(`userid`, `jobid`, `cv`, `date`) VALUES ('$userid','$jobid','$file','$date')";
-      mysqli_query($con, $sql);
+      if (mysqli_query($con, $sql)) {
 
+        echo "<script>alert('Apply Job')</script>";
 
+        header('Location: index.php');
 
-      echo "<script>alert('Apply Job')</script>";
-
-      header('Location: index.php');
-
+      } else {
+        echo "<script>alert('not applied Job')</script>";
+      }
     }
     ?>
 

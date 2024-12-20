@@ -48,8 +48,7 @@
 
                                 <div class="col">
                                     <div class="card h-100 shadow-sm flex-setting">
-                                        <img src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png"
-                                            class="card-img-top" alt="...">
+                                        <img src="./images/a1.jpg" class="card-img-top" alt="...">
 
                                         <div class="card-body">
                                             <div class="clearfix">
@@ -59,6 +58,8 @@
                                             </div>
 
                                         </div>
+                                        <a href="single.php?jobid=<?= $jobdata['jobid'] ?>" class="btn btn-primary">More
+                                            Details</a>
                                     </div>
                                 </div>
 
@@ -105,8 +106,7 @@
 
                                 <div class="col">
                                     <div class="card h-100 shadow-sm flex-setting">
-                                        <img src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png"
-                                            class="card-img-top" alt="...">
+                                        <img src="./images/1.png" class="card-img-top" alt="...">
 
                                         <div class="card-body">
                                             <div class="clearfix">
@@ -116,6 +116,8 @@
                                             </div>
 
                                         </div>
+                                        <a href="single.php?jobid=<?= $jobdata['jobid'] ?>" class="btn btn-primary">More
+                                            Details</a>
                                     </div>
                                 </div>
 

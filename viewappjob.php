@@ -46,20 +46,20 @@
                               <tr>
                                    <th>ID</th>
                                    <th>Job</th>
-                                   <th>User</th>
-                                   <th>CV</th>
+                                   <th>Category</th>
                                    <th>Date</th>
+                                   <th>CV</th>
                               </tr>
                          </thead>
 
                          <tbody id="mytable">
                               <?php
-
-                              $sql = "select application.appid, application.userid, user.name , jobs.title, employer.empid, application.cv, application.date
+                              $userid = $_SESSION['userid'];
+                              $sql = "select application.appid, jobs.name, categories.Name as 'catname',  application.date, application.cv
                               from application
                               INNER join jobs on jobs.jobid = application.jobid
-                              INNER join employer on employer.empid = jobs.empid
-                              INNER join user on user.userid = application.userid
+                              INNER join categories on categories.catid = jobs.catid
+                            INNER join user on user.userid = application.userid
                               where application.userid = '$userid'
                               ";
                               $rs = mysqli_query($con, $sql);
@@ -68,10 +68,11 @@
 
                                    <tr>
                                         <td><?= $data['appid'] ?></td>
-                                        <td><?= $data['title'] ?></td>
                                         <td><?= $data['name'] ?></td>
-                                        <td><?= $data['cv'] ?></td>
+                                        <td><?= $data['catname'] ?></td>
                                         <td><?= $data['date'] ?></td>
+                                        <td><a href="cv/<?= $data['CV'] ?>" class="btn btn-warning" target="_blank">view
+                                                  cv</a></td>
 
                                    </tr>
 
@@ -89,16 +90,6 @@
 
      </div>
 
-     <script>
-          $(document).ready(function () {
-               $("#myinput").on("keyup", function () {
-                    var value = $(this).val().toLowerCase();
-                    $("#mytable tr").filter(function () {
-                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                    });
-               });
-          });
-     </script>
 
      <br><br>
      <?php include('footer.php'); ?>

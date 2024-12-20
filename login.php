@@ -45,7 +45,8 @@
                             </div>
                             <input type="submit" name="login" value="Login" class="btn btn-primary">
 
-                            <span class="signup">Don't have an account?&nbsp;<a href="#" class="link">Sign up</a></span>
+                            <span class="signup">Don't have an account?&nbsp;<a href="register.php" class="link">Sign
+                                    up</a></span>
                         </form>
                     </div>
                 </div>
@@ -77,9 +78,11 @@
                     $_SESSION['password'] = $password;
                     $_SESSION['roletype'] = $type;
 
-                    if ($userinfo['roletype'] == 1) {
-                        header('Location: admin.php');
-                    } elseif ($userinfo['roletype'] == 2) {
+                    if ($userinfo['roletype'] == 'admin') {
+                        header('Location: index.php');
+                    } elseif ($userinfo['roletype'] == 'user') {
+                        header('Location: index.php');
+                    } elseif ($userinfo['roletype'] == 'employer') {
                         header('Location: index.php');
                     }
 

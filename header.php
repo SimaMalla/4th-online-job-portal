@@ -21,20 +21,28 @@
 
 				session_start();
 				if (isset($_SESSION['roletype'])) {
-					if ($_SESSION['roletype'] == 1) {
+					if ($_SESSION['roletype'] == 'admin') {
 						echo '
 					<li><a href="index.php">Home Page</a></li>
-					<li><a href="viewappjobs.php">View Application</a></li>
-					<li><a href="categories.php">Categories</a></li>
-					<li><a href="job.php">Add Jobs</a></li>
+				
 					<li><a href="viewjobs.php">View Jobs</a></li>
+					<li><a href="viewuser.php">ViewUser</a></li>
+					<li><a href="viewappjob.php">View applications</a></li>
 					<li><a href="logout.php">Logout</a></li>';
-					} elseif ($_SESSION['roletype'] == 2) {
+					} elseif ($_SESSION['roletype'] == 'user') {
 						echo '
 							<li><a href="index.php">Home Page</a></li>
 							
 							<li><a href="viewjobs.php">View Jobs</a></li>
 					<li><a href="logout.php">Logout</a></li>';
+					} elseif ($_SESSION['roletype'] == 'employer') {
+
+						echo '<li><a href="index.php">Home Page</a></li>
+						<li><a href="job.php">Add Jobs</a></li>
+						<li><a href="viewjobs.php">View Jobs</a></li>
+						<li><a href="categories.php">Categories</a></li>
+						<li><a href="logout.php">Logout</a></li>';
+
 					} else {
 						echo '
 							<li><a href="index.php">Home Page</a></li>

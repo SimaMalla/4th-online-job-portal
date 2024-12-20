@@ -502,9 +502,9 @@ ul.f_list li a, ul.f_list2 li a{
 	margin:0;
 	list-style:none;
 }
-.footer-list li {
+/* .footer-list li {
     padding-bottom: 20px;
-}
+} */
 .footer-list li p {
     overflow: hidden;
     padding: 0;
@@ -2806,7 +2806,7 @@ ul.grid-1 li.grid-1_right h4, ul.grid-1 li.grid-1_left h4 {
     width: 100%;
 }
 .view-h-job{
-    min-height: 49vh;
+    min-height: 55vh;
 }
 .login-content{
     padding: 2rem;
@@ -3113,7 +3113,7 @@ width: 100%;
 }
 
 .footer-list li {
-    margin-bottom: 10px;
+    margin-bottom: 3px;
 }
 
 .footer-list li a {
@@ -3173,4 +3173,9 @@ width: 100%;
 .table-job{
     padding-top: 80px;
     padding-bottom: 80px;
+}
+
+.dropdwon-text{
+    color: #000;
+
 }
