@@ -32,7 +32,7 @@
                             <div class="textbox-wrap">
                                 <div class="form-group">
                                     <input type="hidden" name="jobid" value="" />
-                                    <input type="text" placeholder="Enter a name" name="name" value=""
+                                    <input type="text" placeholder="Enter a title of job" name="name" value=""
                                         class="form-control" required />
                                 </div>
 
@@ -54,7 +54,19 @@
                                     <input type="text" placeholder="Salary" name="salary" value="" class="form-control"
                                         required />
                                 </div>
-
+                                <div class="form-group">
+                                    <input type="date" placeholder="Date" name="date" value="" class="form-control"
+                                        required />
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="location" id="desc" cols="2" rows="2" placeholder="Enter a location"
+                                        class="form-control" required></textarea>
+                                </div>
+                                <form action="upload.php" method="POST" enctype="multipart/form-data">
+                                    <label for="photo">Choose a photo to upload:</label>
+                                    <input type="file" name="photo" id="photo" required><br><br>
+                                    <input type="submit" value="Upload Photo">
+                                </form>
                                 <div class="form-group">
                                     <select name="catid" class="form-control" required>
                                         <?php
@@ -93,8 +105,10 @@
                             <th>Skill</th>
                             <th>Desc</th>
                             <th>Salary</th>
-                            <th>Timing</th>
+
+                            <th>Location</th>
                             <th>Date</th>
+                            <th>Timing</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -112,8 +126,9 @@
                                 <td><?= $jobdata['skill'] ?></td>
                                 <td><?= $jobdata['desc'] ?></td>
                                 <td><?= $jobdata['salary'] ?></td>
-                                <td><?= $jobdata['timing'] ?></td>
+                                <td><?= $jobdata['location'] ?></td>
                                 <td><?= $jobdata['date'] ?></td>
+                                <td><?= $jobdata['timing'] ?></td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -133,10 +148,11 @@
         $date = date('d/m/y');
         $timing = $_POST['timing'];
         $salary = $_POST['salary'];
+        $location = $_POST['location'];
 
         if (
-            mysqli_query($con, "INSERT INTO jobs(`name`, `desc`, `skill`, `timing`, `date`, `salary`, `catid`) 
-            VALUES ('$name', '$desc', '$skill', '$timing', '$date', '$salary', '$catid')")
+            mysqli_query($con, "INSERT INTO jobs(`name`, `desc`, `skill`, `timing`, `date`, `salary`,`location`, `catid`) 
+            VALUES ('$name', '$desc', '$skill', '$timing', '$date', '$salary','$location', '$catid')")
         ) {
             echo "<script> alert('Record added successfully');</script>";
         } else {

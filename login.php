@@ -36,14 +36,18 @@
                 <div class="main">
                     <div class="box effect7">
                         <div class="header-text">Employer / User Login</div>
-                        <form action="login.php" method="post">
+                        <form id="loginForm" action="login.php" method="post">
                             <div class="form-group">
-                                <input type="text" placeholder="enter a email" name="email" class="form-control">
+                                <input type="text" placeholder="enter a email" id="email" name="email"
+                                    class="form-control">
+                                <span class="error"></span>
                             </div>
                             <div class="form-group">
-                                <input type="text" placeholder="enter a password" name="password" class="form-control">
+                                <input type="text" placeholder="enter a password" id="password" name="password"
+                                    class="form-control">
+                                <span class="error"></span>
                             </div>
-                            <input type="submit" name="login" value="Login" class="btn btn-primary">
+                            <input type="submit" name="login" id="login" value="Login" class="btn btn-primary">
 
                             <span class="signup">Don't have an account?&nbsp;<a href="register.php" class="link">Sign
                                     up</a></span>
@@ -98,7 +102,77 @@
         </div>
     </div>
 
+    <script>
+        const loginForm = document.getElementById("loginForm");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
 
+        // Event listener for form submission
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent form submission
+            if (validateInputs()) {
+                loginForm.submit(); // Submit form if validation passes
+            }
+        });
+
+        // Function to set error message
+        const setError = (element, message) => {
+            const formgroup = element.parentElement;
+            const errorDisplay = formgroup.querySelector(".error");
+
+            errorDisplay.innerText = message;
+            formgroup.classList.add("error");
+            formgroup.classList.remove("success");
+        };
+
+        // Function to set success state
+        const setSuccess = (element) => {
+            const formgroup = element.parentElement;
+            const errorDisplay = formgroup.querySelector(".error");
+
+            errorDisplay.innerText = "";
+            formgroup.classList.add("success");
+            formgroup.classList.remove("error");
+        };
+
+        // Function to validate email format
+        const isValidEmail = (email) => {
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(String(email).toLowerCase());
+        };
+
+        // Function to validate form inputs
+        const validateInputs = () => {
+            const emailValue = email.value.trim();
+            const passwordValue = password.value.trim();
+
+            let isValid = true;
+
+            // Validate email
+            if (emailValue === "") {
+                setError(email, "Email is required");
+                isValid = false;
+            } else if (!isValidEmail(emailValue)) {
+                setError(email, "Enter a valid email address");
+                isValid = false;
+            } else {
+                setSuccess(email);
+            }
+
+            // Validate password
+            if (passwordValue === "") {
+                setError(password, "Password is required");
+                isValid = false;
+            } else if (passwordValue.length < 8) {
+                setError(password, "Password must be at least 8 characters");
+                isValid = false;
+            } else {
+                setSuccess(password);
+            }
+
+            return isValid;
+        };
+    </script>
     <?php include('footer.php'); ?>
 </body>
 

@@ -39,7 +39,7 @@
     width: 380px;
     background: rgba(0, 0, 0, 0.53);
     display: flex;
-    color: white;
+    
     flex-direction: column;
     justify-content: center;
     align-content: center;
@@ -105,6 +105,7 @@ input:focus {
 }
 
 .signup {
+    color: antiquewhite;
     margin-top: 17px;
     font-size: 14px;
 }
@@ -128,7 +129,13 @@ input:focus {
 .header-text{
     font-size: 28px;
     margin-bottom: 30px;
+    color:aliceblue
 }
 .form-group{
     width: 100%;
+}
+
+
+.error{
+    color: red;
 }

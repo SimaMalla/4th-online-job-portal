@@ -16,7 +16,7 @@ body a{
 	-ms-transition:0.5s all;
 }
 .navbar-default {
-    background-color: #e71212 !important;
+    background-color: #f23c08 !important;
     border-color: #e53c1b;
     border-radius: 0px;
 }
@@ -1545,6 +1545,7 @@ label.col-md-3.control-lable {
     font-size: 0.85em;
     font-weight: 300;
     vertical-align: middle;
+    color: white;
 }
 .radios label:first-child {
     margin-left: 0;
@@ -2816,14 +2817,15 @@ ul.grid-1 li.grid-1_right h4, ul.grid-1 li.grid-1_left h4 {
     margin: 0px 1px 1px 0px;
 }
 .picture{
-    background:url(../images/banner3.jpg)no-repeat center top;
+    /* background:url(../images/banner3.jpg)no-repeat center top; */
 	background-size:cover;
     -webkit-background-size:cover;
     -moz-background-size:cover;
     -o-background-size:cover;
     min-height:630px;	
     width: 100%;
-    background: linear-gradient(45deg, #4caf50, #2196f3);
+background-image:  url('../images/picture2.jpg') ;
+background-attachment: fixed;
 }
 
 
@@ -2975,12 +2977,13 @@ width: 100%;
 }
 
 .btn-primary {
-    background-color: #007bff;
+    background-color: #d9534f;
     color: white;
 }
 
 .btn-info {
-    background-color: #17a2b8;
+    background-color: #d9534f;
+    border-color: #d43f3a;
     color: white;
 }
 
@@ -3068,7 +3071,7 @@ width: 100%;
 }
 /* ////////////////////////////////  footer */
 .footer {
-    background-color: #333;
+    background-color: #002146;
     color: #fff;
     padding: 30px 0;
     font-family: 'Roboto', sans-serif;
@@ -3174,3 +3177,47 @@ width: 100%;
     color: #000;
 
 }
+
+.hero-holder{
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            url('../images/homebg.png') no-repeat center center;
+            min-height: 93vh;
+            background-attachment: fixed;
+            background-size: cover;
+}
+.inner-hero-section{
+ position: absolute;
+ bottom: 30%;
+color: white;
+margin: 0 auto;
+}
+.hero-header{
+    font-size: 58px;
+    margin-bottom: 30px;
+}
+.hero-header strong{
+    color: #ef3b3b;
+    font-size: 58px;
+    margin-bottom: 30px;
+}
+.para-hero{
+    margin-bottom: 60px;
+    font-size: 20px;
+}
+.logo-img-class{
+    max-height: 50px;
+    filter: brightness(0) invert(1);
+}
+.navbar-nav li a{
+    font-weight: 500 !important;
+}
+
+.register-bg{
+    background-image: url('../images/picture1.jpg');
+    background-repeat: no-repeat; 
+   background-size: cover;
+    position: relative;
+
+}
+

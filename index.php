@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page | Jobs Portal</title>
     <link rel="stylesheet" href="./css/cards.css">
+    <link rel="stylesheet" href="./css/swiper.css">
+
     <?php include('header_link.php'); ?>
 
 </head>
@@ -20,7 +22,33 @@
     ?>
 
 
+    <section class="position-relative hero-holder bg-cover bg-center">
+        <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75"></div> -->
+        <div class="container">
+
+            <div
+                class=" position-relative d-flex flex-column justify-content-center align-items-start text-white py-5 h-100 inner-hero-section">
+                <div class="text-start">
+                    <h1 class="display-4 fw-bold hero-header">
+                        Let us find your Forever Job.
+                        <br>
+                        <strong class="d-block text-danger"> "Your Dream Job Awaits!"</strong>
+                    </h1>
+                    <p class="mt-4 fs-5 para-hero">
+                        Explore thousands of opportunities tailored just for you. Start your journey to success today.
+                    </p>
+                    <div class="mt-4 d-flex gap-3">
+                        <a href="viewjobs.php" class="btn btn-danger px-4 py-2 text-white">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="container picture">
+
+
+
+
         <div class="single">
             <div class="box_2 ">
                 <div class="header-card-sec">
@@ -132,13 +160,10 @@
                     </div>
                 </main>
 
-
-
-
             </div>
         </div>
 
-
+        <script src="./js/jsswiper.js"></script>
     </div>
 
     <?php include('footer.php'); ?>

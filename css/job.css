@@ -36,6 +36,7 @@ body {
     border-radius: 8px;
     border: 1px solid #ddd;
     margin-bottom: 15px;
+    height: 45px;
     transition: border 0.3s ease;
 }
 

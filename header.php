@@ -13,7 +13,10 @@
 		</div>
 		<!--/.navbar-header-->
 		<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" style="height: 1px;">
-			<div class="job-logo">Job Finder</div>
+			<div class="job-logo">
+
+				<img src="./images/logo2.png" class="logo-img-class" alt="Logo">
+			</div>
 			<ul class="nav navbar-nav">
 				<!-- <li><a href="register.php"><b>Register</b></a></li>
 				<li><a href="login.php"><b>Login</b></a></li> -->
