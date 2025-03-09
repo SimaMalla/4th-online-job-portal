@@ -1,0 +1,60 @@
+.card-img-top{
+    width: 150px;
+
+}
+.profile-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+
+.profilelevel {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* Container for center alignment */
+.containerprofile {
+    max-width: 800px;
+    margin-top: 10px;
+    padding: 0px;
+    margin-left: 40%;
+}
+
+/* Card styling */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    border: none;
+}
+
+.card-img-top {
+    border-radius: 75px;
+    object-fit: cover;
+}
+
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profilelevel {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+
+
+.profilelebel{
+    margin-top: -11%;
+}
+
+.logoutbttn{
+    margin-top: 5px;
+    margin-right: 280px;
+}

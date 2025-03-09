@@ -52,8 +52,7 @@
 
                         <div class="form-buttons custom-form-buttons">
                             <input type="submit" name="addcat" value="Add Category" class="btn btn-primary custom-btn">
-                            <input type="submit" name="updatecat" value="Update Category"
-                                class="btn btn-info custom-btn">
+
                         </div>
                     </form>
                 </div>
@@ -74,24 +73,26 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <?php
-                    $sql = "SELECT * FROM `categories`";
-                    $rs = mysqli_query($con, $sql);
-                    while ($data = mysqli_fetch_array($rs)) {
-                        ?>
-                        <tr>
-                            <td><?= $data['catid'] ?></td>
-                            <td><?= $data['Name'] ?></td>
-                            <td>
-                                <a href="categories.php?catid=<?= $data['catid'] ?>"
-                                    class="btn btn-primary custom-edit-btn">Edit</a>
-                                <a href="categories.php?delid=<?= $data['catid'] ?>"
-                                    class="btn btn-danger custom-delete-btn">Delete</a>
-                            </td>
-                        </tr>
+                    <tbody id="mytable">
                         <?php
-                    }
-                    ?>
+                        $sql = "SELECT * FROM `categories`";
+                        $rs = mysqli_query($con, $sql);
+                        while ($data = mysqli_fetch_array($rs)) {
+                            ?>
+                            <tr>
+                                <td><?= $data['catid'] ?></td>
+                                <td><?= $data['Name'] ?></td>
+                                <td>
+                                    <a href="categories.php?catid=<?= $data['catid'] ?>"
+                                        class="btn btn-primary custom-edit-btn">Edit</a>
+                                    <a href="categories.php?delid=<?= $data['catid'] ?>"
+                                        class="btn btn-danger custom-delete-btn">Delete</a>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
                 </table>
             </div>
 
@@ -130,3 +131,13 @@ if (isset($_POST['updatecat'])) {
     }
 }
 ?>
+<script>
+    $(document).ready(function () {
+        $("#myinput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#mytable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

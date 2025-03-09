@@ -23,8 +23,8 @@
                     <div class="box effect7">
                         <div class="header-text">Employer/User Registration</div>
 
-                        <form id="registrationForm" action="register.php" method="post">
-                            <div class="form-group">
+                        <form id="registrationForm" action="register.php" method="post" enctype="multipart/form-data">
+                            <div class=" form-group">
                                 <input type="text" placeholder="Enter your name/company name" name="name" id="name"
                                     class="form-control">
                                 <div class="error"></div>
@@ -36,6 +36,11 @@
                             </div>
                             <div class="form-group">
                                 <input type="password" placeholder="Enter your password" name="password" id="pass"
+                                    class="form-control">
+                                <div class="error"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="file" name="file" id="img" placeholder="upload your photo"
                                     class="form-control">
                                 <div class="error"></div>
                             </div>
@@ -61,14 +66,36 @@
                 $name = mysqli_real_escape_string($con, $_POST['name']);
                 $email = mysqli_real_escape_string($con, $_POST['email']);
                 $password = mysqli_real_escape_string($con, $_POST['password']);
-                $role = mysqli_real_escape_string($con, $_POST['roletype']);
-                $sql = "INSERT INTO `user` (`name`, `email`, `password`, `roletype`) VALUES ('$name', '$email', '$password', '$role')";
-                if (mysqli_query($con, $sql)) {
-                    echo "<script>alert('Your account created Successfully')</script>";
-                } else {
-                    echo "<script>alert('Registration Failed. Please try again later.')</script>";
+                $file = $_FILES['file']['name'];
+                $tmp = $_FILES['file']['tmp_name'];
+                $dest = 'uploads'; // Destination folder
+            
+                // Create the uploads directory if it doesn't exist
+                if (!is_dir($dest)) {
+                    mkdir($dest, 0777, true);
+                }
+
+                // Move the uploaded file to the destination folder
+                if (move_uploaded_file($tmp, $dest . '/' . $file)) {
+                    $role = mysqli_real_escape_string($con, $_POST['roletype']);
+                    $sql = "SELECT * FROM user WHERE email = '$email'";
+                    $rs = mysqli_query($con, $sql);
+
+                    if ($rs && mysqli_num_rows($rs) > 0) {
+                        // If a user with the same email exists
+                        echo "<script>alert('This email is already taken.');</script>";
+                    } else {
+                        $sql = "INSERT INTO `user` (`name`, `email`, `password`,`image`, `roletype`) VALUES ('$name', '$email', '$password','$file', '$role')";
+                        if (mysqli_query($con, $sql)) {
+                            echo "<script>alert('Your account created Successfully')</script>";
+                        } else {
+                            echo "<script>alert('Registration Failed. Please try again later.')</script>";
+                        }
+                    }
+
                 }
             }
+
 
             ?>
         </div>
@@ -81,9 +108,8 @@
         const role = document.getElementById("role");
 
         form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (validateInputs()) {
-                form.submit();
+            if (!validateInputs()) {
+                e.preventDefault(); // Prevent form submission if inputs are invalid
             }
         });
 

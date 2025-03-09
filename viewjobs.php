@@ -39,7 +39,7 @@
 
 
                             <?php
-                            $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location 
+                            $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location, jobs.logo 
                         FROM jobs
                         INNER JOIN categories ON categories.catid=jobs.catid
                         ORDER by jobs.jobid DESC";
@@ -51,8 +51,10 @@
 
                                 <div class="col">
                                     <div class="card h-100 shadow-sm flex-setting">
-                                        <img src="https://www.freepnglogos.com/uploads/notebook-png/download-laptop-notebook-png-image-png-image-pngimg-2.png"
-                                            class="card-img-top" alt="...">
+                                        <?php
+                                        $imagePath = 'uploads/jobs/' . htmlspecialchars($jobdata['logo']);
+                                        ?>
+                                        <img src="<?= $imagePath ?>" class="card-img-top" alt="Job Image">
 
                                         <div class="card-body">
                                             <div class="clearfix">

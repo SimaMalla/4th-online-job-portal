@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default" role="navigation">
-	<div class="container">
+	<div class="container padding-top-button">
 		<div class="navbar-header topic">
 			<!-- <div class="job-logo">Job Finder</div> -->
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -21,50 +21,97 @@
 				<!-- <li><a href="register.php"><b>Register</b></a></li>
 				<li><a href="login.php"><b>Login</b></a></li> -->
 				<?php
-
+				include('dbconnect.php');
 				session_start();
+
+				if (isset($_SESSION['userid'])) {
+					$userid = $_SESSION['userid'];
+				}
 				if (isset($_SESSION['roletype'])) {
 					if ($_SESSION['roletype'] == 'admin') {
+						$sql = "SELECT * FROM user WHERE userid = '$userid'";
+						$rs = mysqli_query($con, $sql);
+
+						if ($rs && mysqli_num_rows($rs) > 0) {
+							// Fetch the user data from the result set
+							$jobdata = mysqli_fetch_array($rs);
+
+							$imagePath = 'uploads/' . htmlspecialchars($jobdata['image']);
+							$profileImage = file_exists($imagePath) && htmlspecialchars($jobdata['image']) ? $imagePath : './images/profile.png';
+
+						}
 						echo '
 					<li><a href="index.php">Home Page</a></li>
 				
 					<li><a href="viewjobs.php">View Jobs</a></li>
 					<li><a href="viewuser.php">ViewUser</a></li>
 					<li><a href="viewappjob.php">View applications</a></li>
-					<li><a href="logout.php">Logout</a></li>';
+					<li><a href="logout.php">Logout</a></li>
+					<li><a href="profile.php"><img class="profileimg" src="' . htmlspecialchars($profileImage, ENT_QUOTES, 'UTF-8') . '"/></a></li>';
 					} elseif ($_SESSION['roletype'] == 'user') {
+						$sql = "SELECT * FROM user WHERE userid = '$userid'";
+						$rs = mysqli_query($con, $sql);
+
+						if ($rs && mysqli_num_rows($rs) > 0) {
+							// Fetch the user data from the result set
+							$jobdata = mysqli_fetch_array($rs);
+
+							$imagePath = 'uploads/' . htmlspecialchars($jobdata['image']);
+							$profileImage = file_exists($imagePath) && htmlspecialchars($jobdata['image']) ? $imagePath : './images/profile.png';
+
+						}
 						echo '
 							<li><a href="index.php">Home Page</a></li>
 							
 							<li><a href="viewjobs.php">View Jobs</a></li>
-					<li><a href="logout.php">Logout</a></li>';
+							<li><a href="logout.php">Logout</a></li>
+					<li><a href="profile.php"><img class="profileimg" src="' . htmlspecialchars($profileImage, ENT_QUOTES, 'UTF-8') . '"/>
+					</a></li>';
 					} elseif ($_SESSION['roletype'] == 'employer') {
 
+						$sql = "SELECT * FROM user WHERE userid = '$userid'";
+						$rs = mysqli_query($con, $sql);
+
+						if ($rs && mysqli_num_rows($rs) > 0) {
+							// Fetch the user data from the result set
+							$jobdata = mysqli_fetch_array($rs);
+
+							$imagePath = 'uploads/' . htmlspecialchars($jobdata['image']);
+							$profileImage = file_exists($imagePath) && htmlspecialchars($jobdata['image']) ? $imagePath : './images/profile.png';
+
+						}
+
+
 						echo '<li><a href="index.php">Home Page</a></li>
-						<li><a href="job.php">Add Jobs</a></li>
-						<li><a href="viewjobs.php">View Jobs</a></li>
-						<li><a href="categories.php">Categories</a></li>
-						<li><a href="logout.php">Logout</a></li>';
+                <li><a href="job.php">Add Jobs</a></li>
+
+                <li><a href="viewjobs.php">View Jobs</a></li>
+                <li><a href="categories.php">Categories</a></li>
+                <li><a href="application.php">Application</a></li>
+                <li><a href="logout.php">Logout</a></li>
+					
+                <li><a href="profile.php"><img class="profileimg" src="' . htmlspecialchars($profileImage, ENT_QUOTES, 'UTF-8') . '" /></a></li>';
 
 					} else {
 						echo '
-							<li><a href="index.php">Home Page</a></li>
-							
-							<li><a href="viewjobs.php">View Jobs</a></li>
-							<li><a href="register.php">Register</a></li>
-							<li><a href="login.php">Login</a></li>
-					';
+                <li><a href="index.php">Home Page</a></li>
+
+                <li><a href="viewjobs.php">View Jobs</a></li>
+                <li><a href="register.php">Register</a></li>
+                <li><a href="login.php">Login</a></li>
+                ';
 					}
 
 				} else {
 					echo '
-					<li><a href="index.php">Home Page</a></li>
-					
-					<li><a href="viewjobs.php">View Jobs</a></li>
-					<li><a href="register.php">Register</a></li>
-					<li><a href="login.php">Login</a></li>
-			';
+                <li><a href="index.php">Home Page</a></li>
+
+                <li><a href="viewjobs.php">View Jobs</a></li>
+                <li><a href="register.php">Register</a></li>
+                <li><a href="login.php">Login</a></li>
+                ';
 				}
+
 				?>
 
 			</ul>

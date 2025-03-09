@@ -5,40 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Applied Jobs | Jobs Portal</title>
-    <?php
-
-    include('header_link.php');
-    include('dbconnect.php');
-
-
-
-
-    ?>
+    <?php include('header_link.php'); ?>
 </head>
 
 <body>
 
     <?php
-
+    include('dbconnect.php');
     include('header.php');
 
-    if (!isset($_SESSION['userid'])) {
-        header('Location: login.php');
+    if (!$con) {
+        die("Database connection failed: " . mysqli_connect_error());
     }
 
-    $empid = $_SESSION['userid'];
+    // Ensure session is started
+    if (!isset($_SESSION['userid'])) {
+        echo "<script>alert('You must log in first.'); window.location.href='login.php';</script>";
+        exit();
+    }
 
+    $userid = $_SESSION['userid'];
     ?>
-    <div class="container">
 
-
-
+    <div class="container view-h-job">
         <div class="single">
-
-
             <div class="col-md-12">
                 <div class="form-group">
-                    <input type="text" id="myinput" placeholder="search ......" class="form-control">
+                    <input type="text" id="myinput" placeholder="Search..." class="form-control">
                 </div>
 
                 <table class="table">
@@ -46,48 +39,43 @@
                         <tr>
                             <th>ID</th>
                             <th>Job</th>
-                            <th>User</th>
-                            <th>CV</th>
+                            <th>Category</th>
                             <th>Date</th>
+                            <th>CV</th>
                         </tr>
                     </thead>
 
                     <tbody id="mytable">
                         <?php
-
-                        $sql = "select application.appid, user.name , jobs.title, employer.empid, application.cv, application.date
-                              from application
-                              INNER join jobs on jobs.jobid = application.jobid
-                              INNER join employer on employer.empid = jobs.empid
-                              INNER join user on user.userid = application.userid
-                              ";
+                        $sql = "SELECT a.appid, j.name AS job_name, c.Name AS category_name, a.date, a.cv
+                                FROM application a
+                                INNER JOIN jobs j ON a.jobid = j.jobid
+                                INNER JOIN categories c ON j.catid = c.catid
+                                WHERE j.userid = '$userid'";
                         $rs = mysqli_query($con, $sql);
+
+                        if (!$rs) {
+                            die("Query failed: " . mysqli_error($con));
+                        }
+
                         while ($data = mysqli_fetch_array($rs)) {
                             ?>
-
                             <tr>
-                                <td><?= $data['appid'] ?></td>
-                                <td><?= $data['title'] ?></td>
-                                <td><?= $data['name'] ?></td>
-                                <td><?= $data['cv'] ?></td>
-                                <td><?= $data['date'] ?></td>
-
+                                <td><?= htmlspecialchars($data['appid']) ?></td>
+                                <td><?= htmlspecialchars($data['job_name']) ?></td>
+                                <td><?= htmlspecialchars($data['category_name']) ?></td>
+                                <td><?= htmlspecialchars($data['date']) ?></td>
+                                <td>
+                                    <a href="uploads/<?= htmlspecialchars($data['cv']) ?>" class="btn btn-warning"
+                                        target="_blank">View CV</a>
+                                </td>
                             </tr>
-
-                            <?php
-                        }
-                        ?>
+                        <?php } ?>
                     </tbody>
                 </table>
-
             </div>
-
         </div>
-
-
-
     </div>
-
     <script>
         $(document).ready(function () {
             $("#myinput").on("keyup", function () {
@@ -99,9 +87,7 @@
         });
     </script>
 
-    <br><br>
     <?php include('footer.php'); ?>
-
 
 </body>
 

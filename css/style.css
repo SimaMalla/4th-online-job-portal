@@ -789,8 +789,10 @@ span.m_2{
 input.form-control {
     box-shadow: none;
     background-color:#fff;
-    padding:0 20px;
+    padding:20px 20px;
     border-radius:0px;
+    margin-top: 40px;
+
 }
 .input-group-addon {
     padding: 6px 12px;
@@ -3168,10 +3170,10 @@ width: 100%;
         margin-bottom: 20px;
     }
 }
-.table-job{
-    padding-top: 80px;
+/* .table-job{
+    padding-top: 800px;
     padding-bottom: 80px;
-}
+} */
 
 .dropdwon-text{
     color: #000;
@@ -3214,10 +3216,36 @@ margin: 0 auto;
 }
 
 .register-bg{
-    background-image: url('../images/picture1.jpg');
+    background-image: url('../images/registerbanner.jpg');
     background-repeat: no-repeat; 
    background-size: cover;
     position: relative;
 
 }
+
+.applybanner{
+    background-image:linear-gradient(to bottom, rgba(79, 75, 75, 0.5), rgba(94, 91, 91, 0.5)), url('../images/applybanner.png');
+    background-repeat: no-repeat; 
+   background-size: cover;
+    position: relative;
+    height: 500px;
+    width: 100%;
+    margin-bottom: -50px;
+    color: white;
+}
+
+
+.padding-top-button{
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+}
+
+.profileimg {
+    width: 30px; /* Adjust the width */
+    height: 30px; /* Adjust the height */
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover; /* Ensures the image fits well */
+}
+
+
 

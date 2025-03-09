@@ -109,7 +109,8 @@
 
         // Event listener for form submission
         loginForm.addEventListener("submit", (e) => {
-            e.preventDefault(); // Prevent form submission
+            if (!validateInputs())
+                e.preventDefault(); // Prevent form submission
             if (validateInputs()) {
                 loginForm.submit(); // Submit form if validation passes
             }

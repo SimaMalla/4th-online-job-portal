@@ -16,7 +16,7 @@ function hideURLbar() {
 <link href='//fonts.googleapis.com/css?family=Roboto:100,200,300,400,500,600,700,800,900' rel='stylesheet'
     type='text/css'>
 <!----font-Awesome----->
-<link href="css/font-awesome.css" rel="stylesheet">
+<!-- <link href="css/font-awesome.css" rel="stylesheet"> -->
 
 <link rel="stylesheet" href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>

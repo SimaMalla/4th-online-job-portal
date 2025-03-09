@@ -23,7 +23,7 @@
 
 
     <section class="position-relative hero-holder bg-cover bg-center">
-        <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75"></div> -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-75"></div>
         <div class="container">
 
             <div
@@ -41,6 +41,12 @@
                         <a href="viewjobs.php" class="btn btn-danger px-4 py-2 text-white">Get Started</a>
                     </div>
                 </div>
+
+                <div class="container my-5">
+                    <div id="jobResults" class="row">
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -64,7 +70,7 @@
 
 
                             <?php
-                            $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location 
+                            $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location, jobs.logo 
                     FROM jobs
                     INNER JOIN categories ON categories.catid=jobs.catid
                     ORDER by jobs.jobid DESC LIMIT 3";
@@ -76,65 +82,10 @@
 
                                 <div class="col">
                                     <div class="card h-100 shadow-sm flex-setting">
-                                        <img src="./images/a1.jpg" class="card-img-top" alt="...">
-
-                                        <div class="card-body">
-                                            <div class="clearfix">
-                                                <h4><?= $jobdata['name'] ?> </h4>
-                                                <small><?= $jobdata['catname'] ?></small>
-
-                                            </div>
-
-                                        </div>
-                                        <a href="single.php?jobid=<?= $jobdata['jobid'] ?>" class="btn btn-primary">More
-                                            Details</a>
-                                    </div>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            <?php } ?>
-
-
-
-
-                        </div>
-
-                    </div>
-                </main>
-
-
-
-
-            </div>
-        </div>
-        <div class="single">
-            <div class="box_2 ">
-                <div class="header-card-sec">
-
-                    <div style="color:#fff; font-size:32px;">Hot Jobs</div>
-
-                    <a href="viewjobs.php" class="btn btn-primary">View All Jobs</a>
-                </div>
-
-                <main>
-                    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
-                        <div class="card-wrapper" style="margin-bottom:80px;">
-
-
-                            <?php
-                            $sql = "SELECT jobs.jobid,jobs.name,categories.name AS 'catname', jobs.desc,jobs.skill,jobs.timing,jobs.date,jobs.salary,jobs.location 
-                    FROM jobs
-                    INNER JOIN categories ON categories.catid=jobs.catid
-                    ORDER by jobs.jobid DESC LIMIT 3";
-                            $rs = mysqli_query($con, $sql);
-                            while ($jobdata = mysqli_fetch_array($rs)) {
-
-                                ?>
-
-
-                                <div class="col">
-                                    <div class="card h-100 shadow-sm flex-setting">
-                                        <img src="./images/1.png" class="card-img-top" alt="...">
+                                        <?php
+                                        $imagePath = 'uploads/jobs/' . htmlspecialchars($jobdata['logo']);
+                                        ?>
+                                        <img src="<?= $imagePath ?>" class="card-img-top" alt="Job Image">
 
                                         <div class="card-body">
                                             <div class="clearfix">
@@ -162,9 +113,8 @@
 
             </div>
         </div>
-
-        <script src="./js/jsswiper.js"></script>
     </div>
+
 
     <?php include('footer.php'); ?>
 

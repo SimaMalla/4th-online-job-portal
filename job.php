@@ -6,27 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
     <link rel="stylesheet" href="./css/job.css">
-    <?php
-    include('header_link.php');
-    ?>
-
+    <?php include('header_link.php'); ?>
 </head>
 
 <body>
-    <?php
-    include('header.php');
-    ?>
+    <?php include('header.php'); ?>
     <?php include('dbconnect.php'); ?>
 
     <div class="">
-        <div class="container">
-            <div class="row ">
-                <div class="col-lg-6">
-
-                    <div class="login-content">
-                        <form action="job.php" method="post">
-                            <div class="section-title">
-                                <h3>Start your job search</h3>
+        <div class="addjobbanner">
+            <div class="row">
+                <div class="banner-job">
+                    <div class="addjobform">
+                        <form action="job.php" method="post" enctype="multipart/form-data">
+                            <div class="">
+                                <h3>Add Jobs</h3>
                             </div>
 
                             <div class="textbox-wrap">
@@ -62,40 +56,35 @@
                                     <textarea name="location" id="desc" cols="2" rows="2" placeholder="Enter a location"
                                         class="form-control" required></textarea>
                                 </div>
-                                <form action="upload.php" method="POST" enctype="multipart/form-data">
+                                <div class="form-group">
                                     <label for="photo">Choose a photo to upload:</label>
-                                    <input type="file" name="photo" id="photo" required><br><br>
-                                    <input type="submit" value="Upload Photo">
-                                </form>
+                                    <input type="file" name="file" id="photo" required><br><br>
+                                </div>
                                 <div class="form-group">
                                     <select name="catid" class="form-control" required>
                                         <?php
-                                        $sql = "SELECT*from categories";
+                                        $sql = "SELECT * FROM categories";
                                         $data = mysqli_query($con, $sql);
                                         if (mysqli_num_rows($data) > 0) {
                                             while ($row = mysqli_fetch_array($data)) {
-                                                ?>
-                                                <option value="<?= $row['catid'] ?>"><?= $row['Name'] ?></option>
-                                                <?php
+                                                echo "<option value='{$row['catid']}'>{$row['Name']}</option>";
                                             }
                                         } else {
-                                            ?>
-                                            <option>Categories not added</option>
-                                            <?php
+                                            echo "<option>Categories not added</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
                                 <div class="login-btn">
                                     <input type="submit" name="addjob" value="Add Job" class="btn btn-primary">
-                                    <input type="submit" name="updatejob" value="Update Job" class="btn btn-info">
+
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
 
-            <div class="col-lg-12 table-job">
+            <div class="table-body-wrapper">
                 <table class="custom-table">
                     <thead>
                         <tr>
@@ -105,7 +94,6 @@
                             <th>Skill</th>
                             <th>Desc</th>
                             <th>Salary</th>
-
                             <th>Location</th>
                             <th>Date</th>
                             <th>Timing</th>
@@ -114,30 +102,28 @@
                     <tbody>
                         <?php
                         $sql = "SELECT jobs.jobid, jobs.name, categories.name AS 'catname', jobs.desc, jobs.skill, jobs.timing, jobs.date, jobs.salary, jobs.location
-                            FROM jobs
-                            INNER JOIN categories ON categories.catid = jobs.catid";
+                                FROM jobs
+                                INNER JOIN categories ON categories.catid = jobs.catid";
                         $rs = mysqli_query($con, $sql);
                         while ($jobdata = mysqli_fetch_array($rs)) {
-                            ?>
-                            <tr>
-                                <td><?= $jobdata['jobid'] ?></td>
-                                <td><?= $jobdata['name'] ?></td>
-                                <td><?= $jobdata['catname'] ?></td>
-                                <td><?= $jobdata['skill'] ?></td>
-                                <td><?= $jobdata['desc'] ?></td>
-                                <td><?= $jobdata['salary'] ?></td>
-                                <td><?= $jobdata['location'] ?></td>
-                                <td><?= $jobdata['date'] ?></td>
-                                <td><?= $jobdata['timing'] ?></td>
-                            </tr>
-                        <?php } ?>
+                            echo "<tr>
+                                    <td>{$jobdata['jobid']}</td>
+                                    <td>{$jobdata['name']}</td>
+                                    <td>{$jobdata['catname']}</td>
+                                    <td>{$jobdata['skill']}</td>
+                                    <td>{$jobdata['desc']}</td>
+                                    <td>{$jobdata['salary']}</td>
+                                    <td>{$jobdata['location']}</td>
+                                    <td>{$jobdata['date']}</td>
+                                    <td>{$jobdata['timing']}</td>
+                                  </tr>";
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
-
 
     <?php
     if (isset($_POST['addjob'])) {
@@ -145,23 +131,49 @@
         $catid = $_POST['catid'];
         $desc = $_POST['desc'];
         $skill = $_POST['skill'];
-        $date = date('d/m/y');
+        $date = date('Y-m-d'); // Use proper date format
         $timing = $_POST['timing'];
         $salary = $_POST['salary'];
         $location = $_POST['location'];
+        $logo = '';
+        $userid = $_SESSION['userid'];
 
-        if (
-            mysqli_query($con, "INSERT INTO jobs(`name`, `desc`, `skill`, `timing`, `date`, `salary`,`location`, `catid`) 
-            VALUES ('$name', '$desc', '$skill', '$timing', '$date', '$salary','$location', '$catid')")
-        ) {
-            echo "<script> alert('Record added successfully');</script>";
+        // File upload handling
+        if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
+            $file = $_FILES['file']['name'];
+            $tmp = $_FILES['file']['tmp_name'];
+            $dest = 'uploads/jobs';
+
+            // Create uploads directory if it doesn't exist
+            if (!is_dir($dest)) {
+                mkdir($dest, 0777, true);
+            }
+
+            // Move the uploaded file
+            if (move_uploaded_file($tmp, $dest . '/' . $file)) {
+                $logo = $file; // Set the logo to the uploaded file
+            } else {
+                echo "<script>alert('File upload failed');</script>";
+                exit;
+            }
         } else {
-            echo "<script>alert('Error adding record');</script>";
+            echo "<script>alert('No file uploaded or there was an error during upload');</script>";
+            exit;
+        }
+
+        // Insert into the database
+        $sql = "INSERT INTO jobs(`name`, `desc`, `skill`, `timing`, `date`, `salary`, `location`, `logo`, `catid`,`userid`) 
+                VALUES ('$name', '$desc', '$skill', '$timing', '$date', '$salary', '$location', '$logo', '$catid','$userid')";
+
+        if (mysqli_query($con, $sql)) {
+            echo "<script>alert('Record added successfully');</script>";
+        } else {
+            echo "<script>alert('Error adding record: " . mysqli_error($con) . "');</script>";
         }
     }
-    include('footer.php');
     ?>
 
+    <?php include('footer.php'); ?>
 </body>
 
 </html>

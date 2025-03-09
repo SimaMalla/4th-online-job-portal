@@ -8,7 +8,6 @@
      <?php
 
      include('header_link.php');
-     include('dbconnect.php');
 
 
 
@@ -18,12 +17,15 @@
 
 <body>
 
+     <?php include('header.php'); ?>
+     <?php include('dbconnect.php'); ?>
      <?php
-
-     include('header.php');
+     if (!$con) {
+          die("Database connection failed: " . mysqli_connect_error());
+     }
 
      if (!isset($_SESSION['userid'])) {
-          header('Location: login.php');
+          die("Session 'userid' is not set.");
      }
 
      $userid = $_SESSION['userid'];
@@ -55,23 +57,24 @@
                          <tbody id="mytable">
                               <?php
                               $userid = $_SESSION['userid'];
-                              $sql = "select application.appid, jobs.name, categories.Name as 'catname',  application.date, application.cv
-                              from application
-                              INNER join jobs on jobs.jobid = application.jobid
-                              INNER join categories on categories.catid = jobs.catid
-                            INNER join user on user.userid = application.userid
-                              where application.userid = '$userid'
+                              $sql = "select a.appid, j.name, c.Name, a.date, a.cv
+                             FROM application a
+                              INNER JOIN jobs j ON a.jobid = j.jobid
+                              INNER JOIN categories c ON j.catid = c.catid
                               ";
                               $rs = mysqli_query($con, $sql);
+                              if (!$rs) {
+                                   die("Query failed: " . mysqli_error($con));
+                              }
                               while ($data = mysqli_fetch_array($rs)) {
                                    ?>
 
                                    <tr>
                                         <td><?= $data['appid'] ?></td>
                                         <td><?= $data['name'] ?></td>
-                                        <td><?= $data['catname'] ?></td>
+                                        <td><?= $data['Name'] ?></td>
                                         <td><?= $data['date'] ?></td>
-                                        <td><a href="cv/<?= $data['CV'] ?>" class="btn btn-warning" target="_blank">view
+                                        <td><a href="uploads/<?= $data['cv'] ?>" class="btn btn-warning" target="_blank">view
                                                   cv</a></td>
 
                                    </tr>
@@ -92,6 +95,17 @@
 
 
      <br><br>
+
+     <script>
+          $(document).ready(function () {
+               $("#myinput").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    $("#mytable tr").filter(function () {
+                         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    });
+               });
+          });
+     </script>
      <?php include('footer.php'); ?>
 
 

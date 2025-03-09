@@ -19,7 +19,7 @@
     color: white;
 }
 .section-login {
-    height: 80vh;
+    height: 78vh;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
                 url('../images/login.jpeg') no-repeat center center;
     background-size: cover;
@@ -28,15 +28,15 @@
 .main {
 
   height: 60vh;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-content: center;
     align-items: center;
 }
 
 .box {
-    height: 450px;
-    width: 380px;
+    height: 440px;
+    width: 490px;
     background: rgba(0, 0, 0, 0.53);
     display: flex;
     
@@ -48,6 +48,9 @@
     z-index: 2;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     padding: 7px;
+    left: 30%;/*Aligns the box to the left edge of the container */
+    top: 45%; /* Vertically centers the box */
+    transform: translateY(-50%); 
 }
 
 form {
@@ -56,6 +59,7 @@ form {
     align-content: center;
     align-items: center;
     flex-direction: column;
+    width: 400px;
 }
 
 .header {
@@ -87,7 +91,7 @@ input:focus {
 
 .butt {
     height: 35px;
-    width: 280px;
+    width: 400px;
     background-color: #ef5350;
     border: 0;
     font-family: 'Roboto';
@@ -138,4 +142,7 @@ input:focus {
 
 .error{
     color: red;
+}
+.btn-primary{
+    width: 400px;
 }
